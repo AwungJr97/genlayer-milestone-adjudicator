@@ -1,67 +1,24 @@
 # GenLayer Milestone Adjudicator
 
-A GenLayer Intelligent Contract for decentralized milestone verification.
+A decentralized milestone verification app built around a GenLayer Intelligent Contract.
 
-## Overview
+## What it does
 
-This project evaluates submitted evidence against predefined milestone requirements
-using GenLayer's consensus-based AI adjudication.
+Users submit a milestone requirement and supporting evidence. The Intelligent Contract stores the case and asks GenLayer's nondeterministic validator process to adjudicate whether the evidence is sufficient. The result is normalized to `APPROVED` or `REJECTED` and can be read back by the frontend.
 
-The contract produces an `APPROVED` or `REJECTED` decision and is designed for:
+## Architecture
 
-- Bounties
-- Grants
-- Freelance work
-- Performance-based agreements
-- Decentralized project milestones
+- `contracts/MilestoneAdjudicator.py` — GenLayer Intelligent Contract.
+- `frontend/index.html` — browser UI using GenLayerJS to write the case, trigger adjudication, wait for consensus, and read the decision.
+- `deploy/001_deploy.ts` — deployment workflow.
+- `tests/test_milestone_adjudicator.py` — contract smoke test.
 
-## Concept
+## GenLayer role
 
-A requester defines a milestone requirement and a contributor submits evidence.
-The Intelligent Contract asks GenLayer's validators to independently evaluate
-whether the evidence sufficiently demonstrates completion.
+The core decision is intentionally nondeterministic: `gl.eq_principle.prompt_non_comparative(...)` lets validators evaluate the evidence while GenLayer consensus determines the accepted execution result.
 
-This turns milestone approval into a transparent, reusable on-chain adjudication
-primitive rather than relying on a single centralized reviewer.
+## Run
 
-## Contract
+Install dependencies with `npm install`, configure the GenLayer CLI/network, then run `npm run deploy`. Open `frontend/index.html` and provide the deployed contract address.
 
-`contracts/MilestoneAdjudicator.py`
-
-The contract stores the milestone requirement, submitted evidence, and final decision.
-
-## Decision logic
-
-The adjudicator approves only when the submitted evidence clearly supports the
-specified requirement. Otherwise it rejects the milestone.
-
-Possible outcomes:
-
-- `APPROVED`
-- `REJECTED`
-- `PENDING` before adjudication
-
-## Example use case
-
-Requirement:
-
-"Implement a responsive landing page with wallet connection."
-
-Evidence:
-
-- GitHub repository
-- Screenshot
-- Demonstration of wallet connection
-
-The Intelligent Contract evaluates the evidence and records the resulting decision.
-
-## Why GenLayer
-
-Milestone verification often requires interpreting evidence rather than comparing
-simple numeric values. GenLayer's Intelligent Contracts and consensus-based
-adjudication make this type of subjective verification suitable for decentralized
-review.
-
-## License
-
-MIT
+This project is intended for GenLayer Studio/Studionet experimentation and milestone-evidence workflows.
