@@ -1,0 +1,12 @@
+{
+  "name": "genlayer-milestone-adjudicator",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Run GenLayer contract tests in Studio\"",
+    "deploy": "genlayer deploy"
+  },
+  "dependencies": {
+    "genlayer-js": "latest"
+  }
+}
