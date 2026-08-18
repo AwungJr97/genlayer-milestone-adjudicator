@@ -9,9 +9,17 @@ class MilestoneAdjudicator(gl.Contract):
     evidence: str
     decision: str
 
-    def __init__(self, requirement: str, evidence: str):
+    def __init__(self, requirement: str = "", evidence: str = ""):
         self.requirement = requirement
         self.evidence = evidence
+        self.decision = "PENDING"
+
+    @gl.public.write
+    def set_case(self, requirement: str, evidence: str):
+        if not requirement.strip() or not evidence.strip():
+            raise ValueError("Requirement and evidence are required")
+        self.requirement = requirement.strip()
+        self.evidence = evidence.strip()
         self.decision = "PENDING"
 
     @gl.public.write
