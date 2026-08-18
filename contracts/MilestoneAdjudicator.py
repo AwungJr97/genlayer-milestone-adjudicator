@@ -1,7 +1,10 @@
 from genlayer import *
 from genlayer.gl import *
 
+
 class MilestoneAdjudicator(gl.Contract):
+    """Consensus-based milestone evidence adjudication."""
+
     requirement: str
     evidence: str
     decision: str
@@ -33,3 +36,7 @@ Approve only when the evidence provides sufficient support for the requirement.
 """
         result = gl.eq_principle.prompt_non_comparative(prompt)
         self.decision = result.strip().upper()
+
+    @gl.public.view
+    def get_decision(self) -> str:
+        return self.decision
